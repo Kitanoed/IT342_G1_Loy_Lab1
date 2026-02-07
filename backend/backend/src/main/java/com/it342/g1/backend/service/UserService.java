@@ -2,7 +2,6 @@ package com.it342.g1.backend.service;
 
 import com.it342.g1.backend.model.User;
 import com.it342.g1.backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,12 +9,14 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
     
     /**
      * Register a new user
@@ -35,19 +36,6 @@ public class UserService {
     }
     
     /**
-     * Authenticate user with email and password
-     */
-    public Optional<User> authenticateUser(String email, String password) {
-        Optional<User> user = userRepository.findByEmail(email);
-        
-        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-            return user;
-        }
-        
-        return Optional.empty();
-    }
-    
-    /**
      * Find user by ID
      */
     public Optional<User> getUserById(Long id) {
@@ -59,12 +47,5 @@ public class UserService {
      */
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-    
-    /**
-     * Find user by username
-     */
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
     }
 }

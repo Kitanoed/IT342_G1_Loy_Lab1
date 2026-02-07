@@ -5,34 +5,20 @@ const API_BASE_URL = 'http://localhost:8080/api';
 // Create axios instance
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Add token to requests if available
-apiClient.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 // Handle response errors
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // If token is invalid or expired, redirect to login
+    // If session is missing/expired, clear local cached user.
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem('authToken');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      localStorage.removeItem('isAuthenticated');
     }
     return Promise.reject(error);
   }
@@ -51,15 +37,10 @@ const authService = {
         firstName,
         lastName,
       });
-      
-      if (response.data.token) {
-        localStorage.setItem('authToken', response.data.token);
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-      }
-      
+
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data?.message || error.message;
     }
   },
 
@@ -72,15 +53,15 @@ const authService = {
         email,
         password,
       });
-      
-      if (response.data.token) {
-        localStorage.setItem('authToken', response.data.token);
+
+      localStorage.setItem('isAuthenticated', 'true');
+      if (response.data.user) {
         localStorage.setItem('user', JSON.stringify(response.data.user));
       }
-      
+
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data?.message || error.message;
     }
   },
 
@@ -90,40 +71,40 @@ const authService = {
   getCurrentUser: async () => {
     try {
       const response = await apiClient.get('/user/me');
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('user', JSON.stringify(response.data));
       return response.data;
     } catch (error) {
-      throw error.response?.data || error.message;
+      throw error.response?.data?.message || error.message;
     }
   },
 
   /**
    * Logout user
    */
-  logout: () => {
-    localStorage.removeItem('authToken');
+  logout: async () => {
+    try {
+      await apiClient.post('/auth/logout');
+    } catch (error) {
+      // Clear local state even if request fails.
+    }
     localStorage.removeItem('user');
+    localStorage.removeItem('isAuthenticated');
   },
 
   /**
    * Check if user is authenticated
    */
   isAuthenticated: () => {
-    return localStorage.getItem('authToken') !== null;
+    return localStorage.getItem('isAuthenticated') === 'true';
   },
 
   /**
-   * Get stored user
+   * Get cached user from local storage
    */
   getStoredUser: () => {
     const user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
-  },
-
-  /**
-   * Get auth token
-   */
-  getToken: () => {
-    return localStorage.getItem('authToken');
   },
 };
 

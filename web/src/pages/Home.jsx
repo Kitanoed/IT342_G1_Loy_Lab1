@@ -9,8 +9,8 @@ const Home = () => {
   return (
     <div className="home-container">
       <div className="home-content">
-        <h1></h1>
-        <p></p>
+        <h1>Simple Auth Lab</h1>
+        <p>Register, login, view dashboard, and logout.</p>
 
         <div className="button-group">
           {isAuthenticated ? (
@@ -19,9 +19,9 @@ const Home = () => {
               <Link to="/dashboard" className="btn btn-primary">
                 Go to Dashboard
               </Link>
-              <button 
-                onClick={() => {
-                  authService.logout();
+              <button
+                onClick={async () => {
+                  await authService.logout();
                   window.location.href = '/';
                 }}
                 className="btn btn-logout"
@@ -41,17 +41,7 @@ const Home = () => {
           )}
         </div>
 
-        <div className="features">
-          <h2>Features</h2>
-          <ul>
-            <li>✓ Secure user registration</li>
-            <li>✓ JWT-based authentication</li>
-            <li>✓ Password encryption with BCrypt</li>
-            <li>✓ Protected routes</li>
-            <li>✓ User profile management</li>
-            <li>✓ MySQL database integration</li>
-          </ul>
-        </div>
+        
       </div>
     </div>
   );

@@ -17,23 +17,18 @@ const Dashboard = () => {
       } catch (err) {
         setError(err.message || 'Failed to load user profile');
         console.error('Error fetching user:', err);
+        navigate('/login');
       } finally {
         setLoading(false);
       }
     };
 
-    // Try to get currently stored user first
-    const storedUser = authService.getStoredUser();
-    if (storedUser) {
-      setUser(storedUser);
-    }
-
     // Fetch fresh user data
     fetchUserProfile();
-  }, []);
+  }, [navigate]);
 
-  const handleLogout = () => {
-    authService.logout();
+  const handleLogout = async () => {
+    await authService.logout();
     navigate('/login');
   };
 

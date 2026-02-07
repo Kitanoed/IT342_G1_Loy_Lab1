@@ -44,8 +44,8 @@ const Register = () => {
         formData.lastName
       );
 
-      // Navigate to dashboard on successful registration
-      navigate('/dashboard');
+      // Registration only creates account; login creates session.
+      navigate('/login');
     } catch (err) {
       setError(err.message || 'Registration failed. Please try again.');
       console.error('Registration error:', err);
