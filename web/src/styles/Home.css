@@ -1,28 +1,40 @@
 .home-container {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--bg-primary);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .home-content {
   text-align: center;
-  color: white;
-  max-width: 600px;
+  color: var(--text-primary);
+  max-width: 640px;
+  position: relative;
+  z-index: 1;
 }
 
 .home-content h1 {
-  font-size: 48px;
-  margin-bottom: 15px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  letter-spacing: -1.5px;
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent-blue-light) 50%, var(--accent-cyan) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
 }
 
 .home-content > p {
   font-size: 18px;
-  margin-bottom: 40px;
-  opacity: 0.9;
+  margin-bottom: 44px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  line-height: 1.7;
 }
 
 .button-group {
@@ -30,67 +42,78 @@
 }
 
 .welcome-message {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 17px;
+  margin-bottom: 24px;
   font-weight: 500;
+  color: var(--accent-blue-light);
 }
 
 .btn {
   display: inline-block;
-  padding: 14px 30px;
-  margin: 10px;
+  padding: 14px 32px;
+  margin: 8px;
   text-decoration: none;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  letter-spacing: 0.3px;
 }
 
 .btn-primary {
-  background-color: #4CAF50;
+  background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-blue-dark) 100%);
   color: white;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: #45a049;
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 32px rgba(59, 130, 246, 0.45);
+  filter: brightness(1.1);
 }
 
 .btn-secondary {
-  background-color: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid white;
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.3);
+  background: var(--glass-bg-hover);
+  border-color: var(--glass-border-hover);
   transform: translateY(-2px);
 }
 
 .btn-logout {
-  background-color: #f44336;
-  color: white;
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.25);
 }
 
 .btn-logout:hover {
-  background-color: #da190b;
+  background: rgba(239, 68, 68, 0.25);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
 }
 
 .features {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 30px;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  padding: 32px;
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
 }
 
 .features h2 {
-  font-size: 24px;
+  font-size: 22px;
   margin-bottom: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
 }
 
 .features ul {
@@ -101,14 +124,15 @@
 }
 
 .features li {
-  font-size: 16px;
+  font-size: 15px;
   margin: 10px 0;
   padding: 5px 0;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 600px) {
   .home-content h1 {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .home-content > p {
