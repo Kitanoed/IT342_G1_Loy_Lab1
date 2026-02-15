@@ -56,6 +56,11 @@ const Register = () => {
 
   return (
     <div className="auth-container">
+      <div className="bg-orbs">
+        <div className="orb"></div>
+        <div className="orb"></div>
+        <div className="orb"></div>
+      </div>
       <div className="auth-box">
         <h1>Create Account</h1>
         

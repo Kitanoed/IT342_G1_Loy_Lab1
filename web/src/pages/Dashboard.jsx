@@ -35,13 +35,23 @@ const Dashboard = () => {
   if (loading) {
     return (
       <div className="dashboard-container">
-        <p>Loading profile...</p>
+        <div className="bg-orbs">
+          <div className="orb"></div>
+          <div className="orb"></div>
+          <div className="orb"></div>
+        </div>
+        <p style={{ position: 'relative', zIndex: 1, color: 'var(--text-secondary)', textAlign: 'center', paddingTop: '40vh' }}>Loading profile...</p>
       </div>
     );
   }
 
   return (
     <div className="dashboard-container">
+      <div className="bg-orbs">
+        <div className="orb"></div>
+        <div className="orb"></div>
+        <div className="orb"></div>
+      </div>
       <div className="dashboard-header">
         <h1>Dashboard</h1>
         <button onClick={handleLogout} className="logout-button">

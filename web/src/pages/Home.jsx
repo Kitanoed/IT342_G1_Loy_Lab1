@@ -8,8 +8,13 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <div className="bg-orbs">
+        <div className="orb"></div>
+        <div className="orb"></div>
+        <div className="orb"></div>
+      </div>
       <div className="home-content">
-        <h1>Simple Auth Lab</h1>
+        <h1>Mini App</h1>
         <p>Register, login, view dashboard, and logout.</p>
 
         <div className="button-group">
